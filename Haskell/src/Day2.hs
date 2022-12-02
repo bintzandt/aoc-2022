@@ -1,10 +1,9 @@
 module Day2 where
 
 import Data.List.Split
-import Data.Char (ord)
 import Aoc
 
-type Input = [[Char]]
+type Input = [String]
 
 prepareInput :: String -> Input
 prepareInput = lines
