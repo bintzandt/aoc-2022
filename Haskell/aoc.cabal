@@ -13,10 +13,9 @@ author:         Bram in 't Zandt
 maintainer:     Bram in 't Zandt
 copyright:      2022 Bram in 't Zandt
 license:        BSD3
-license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
-    README.md
+    ../README.md
 
 source-repository head
   type: git
@@ -27,6 +26,7 @@ library
       Aoc
       Day1
       Day2
+      Day3
   other-modules:
       Paths_aoc
   hs-source-dirs:
@@ -56,6 +56,7 @@ test-suite aoc-test
   other-modules:
       Day1Spec
       Day2Spec
+      Day3Spec
       Paths_aoc
   hs-source-dirs:
       test

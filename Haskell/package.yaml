@@ -6,7 +6,7 @@ author:              "Bram in 't Zandt"
 copyright:           "2022 Bram in 't Zandt"
 
 extra-source-files:
-- README.md
+- ../README.md
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
