@@ -6,6 +6,7 @@ import Control.Monad (forM_)
 import qualified Day1
 import qualified Day2
 import qualified Day3
+import qualified Day4
 
 solve :: Int -> IO ()
 solve day
@@ -14,6 +15,7 @@ solve day
   | day == 1 = putStrLn "** Day 1 **" >> Day1.solve
   | day == 2 = putStrLn "** Day 2 **" >> Day2.solve
   | day == 3 = putStrLn "** Day 3 **" >> Day3.solve
+  | day == 4 = putStrLn "** Day 4 **" >> Day4.solve
   | otherwise = error $ "No solution for day " <> show day
 
 main :: IO ()
