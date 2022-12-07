@@ -3,50 +3,42 @@ module Day7 where
 import Aoc
 import qualified Data.Map as M
 
-type Directory = String
+type Directory = [String]
 type Files = [String]
 type Commands = [String]
-type FileSystem = ([Directory], M.Map Directory Files)
-type Input = M.Map Directory Int
+type FileSystem = (Directory, M.Map String Int)
+type Input = [Int]
 
--- Version of unwords that adds a '/' instead of a space
-unwords' :: [String] -> String
-unwords' [] = ""
-unwords' (x:xs) = x ++ "/" ++ unwords' xs
-
-addToFileSystem :: FileSystem -> Files -> FileSystem
-addToFileSystem (dir, fs) files = (dir, M.union fs (M.fromList [(unwords' dir, files)]))
+addToFileSystem :: FileSystem -> String -> FileSystem
+addToFileSystem (dir, fs) file = do
+  let size = read . head . words $ file
+  let paths = drop 1 . scanl (++) "" . reverse $ dir
+  let zipped = M.fromList (zip paths (repeat size))
+  (dir, M.unionWith (+) fs zipped)
 
 processCommands :: FileSystem -> Commands -> FileSystem
 processCommands fs [] = fs
-processCommands (dir, files) ("$ cd ..":c) = processCommands (init dir, files) c
-processCommands (dir, files) (('$':' ':'c':'d':' ':r):c) = processCommands (dir ++ [r], files) c
-processCommands fs ("$ ls":c) = processCommands (addToFileSystem fs files) commands
-  where
-    files = takeWhile (\co -> head co /= '$') c
-    commands = dropWhile (\co -> head co /= '$')  c
-
-getSum :: M.Map Directory Files -> Directory -> Files -> Int
-getSum com d = sum . map (\file -> case file of
-  'd':'i':'r':' ':d' -> getSum com (d++d'++"/") (com M.! (d++d'++"/"))
-  _ -> read . head . words $ file
-  )
+processCommands (dir, files) ("$ cd ..":c) = processCommands (tail dir, files) c
+processCommands (dir, files) (('$':' ':'c':'d':' ':r):c) = processCommands (r:dir, files) c
+-- Ignore the 'ls' command
+processCommands fs ("$ ls":c) = processCommands fs c
+-- Ignore directories (they will be summed up later)
+processCommands fs (('d':'i':'r':_):c) = processCommands fs c
+processCommands (dir, files) (a:c) = processCommands (addToFileSystem (dir, files) a) c
 
 task1 :: Input -> Int
-task1 = M.foldr (+) 0 . M.filter (< 100000)
+task1 = sum . filter (< 100000)
 
 task2 :: Input -> Int
 task2 i = do
   let totalSpace = 70000000
   let totalNeededSpace = 30000000
-  let availableSpace = totalSpace - (i M.! "//")
+  let availableSpace = totalSpace - head i
   let toFreeUpSpace = totalNeededSpace - availableSpace
-  minimum . map snd . M.toList . M.filter (>toFreeUpSpace) $ i
+  minimum . filter (>toFreeUpSpace) $ i
 
 prepareInput :: String -> Input
-prepareInput i = do
-  let fs = snd . processCommands (["/"], M.empty) . drop 1 . lines $ i
-  M.mapWithKey (getSum fs) fs
+prepareInput = M.elems . snd . processCommands (["/"], M.empty) . drop 1 . lines
 
 solve :: IO ()
 solve = do
