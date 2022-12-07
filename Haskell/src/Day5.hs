@@ -48,7 +48,7 @@ getLine' :: Int -> [String] -> String
 getLine' i = foldr ((:) . (!! i)) ""
 
 parseStacks :: String -> Stacks
-parseStacks s = map (filter (/= ' ')) $ [getLine' (1 + (4 * i)) a | i <- [0..numberOfStacks-1]]
+parseStacks s = map (filter (/= ' ')) $ [getLine' (1 + (4 * i)) stackList | i <- [0..numberOfStacks-1]]
   where
     stackList = init . lines $ s
     numberOfStacks = ((length . head $ stackList) + 1) `div` 4
@@ -63,6 +63,7 @@ prepareInput :: String -> Input
 prepareInput s = (parseStacks . head $ split, lines . last $ split)
   where split = splitOn "\n\n" s
 
+solve :: IO ()
 solve = do
   input <- getPuzzleInput 5
   let preparedInput = prepareInput input

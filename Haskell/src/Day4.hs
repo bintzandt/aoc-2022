@@ -30,6 +30,7 @@ task1 = length . filter hasOverlap
 task2 :: Input -> Int
 task2 = length . filter hasOverlap'
 
+solve :: IO ()
 solve = do
   input <- getPuzzleInput 4
   let preparedInput = prepareInput input

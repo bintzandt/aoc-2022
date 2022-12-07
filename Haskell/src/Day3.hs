@@ -34,6 +34,7 @@ task1 = sum . map (priority . findCommonItem . (\line -> splitAt (length line `d
 task2 :: Input -> Int
 task2 = sum . map (priority . findCommonItem') . chunksOf 3
 
+solve :: IO ()
 solve = do
   input <- getPuzzleInput 3
   let preparedInput = prepareInput input

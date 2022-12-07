@@ -48,6 +48,7 @@ task1 = sum . map calculateScore
 task2 :: Input -> Int
 task2 = sum . map calculateScore'
 
+solve :: IO ()
 solve = do
   input <- getPuzzleInput 2
   let preparedInput = prepareInput input
