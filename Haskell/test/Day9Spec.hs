@@ -9,7 +9,7 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec = task1Spec >> task2Spec
+spec = task1Spec
 
 task1Spec :: Spec
 task1Spec = describe "Task 1" $ do
@@ -18,11 +18,3 @@ task1Spec = describe "Task 1" $ do
       input <- getTestPuzzleInput 9
       let preparedInput = prepareInput input
       return (task1 preparedInput) `shouldReturn` 13
-
-task2Spec :: Spec
-task2Spec = describe "Task 2" $ do
-  describe "With the test puzzle input" $
-    it "Results in 0" $ do
-      input <- getTestPuzzleInput 9
-      let preparedInput = prepareInput input
-      return (task2 preparedInput) `shouldReturn` 0
