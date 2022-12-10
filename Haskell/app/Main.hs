@@ -11,6 +11,7 @@ import qualified Day5
 import qualified Day6
 import qualified Day7
 import qualified Day8
+import qualified Day9
 
 solve :: Int -> IO ()
 solve day
@@ -24,6 +25,7 @@ solve day
   | day == 6 = putStrLn "** Day 6 **" >> Day6.solve
   | day == 7 = putStrLn "** Day 7 **" >> Day7.solve
   | day == 8 = putStrLn "** Day 8 **" >> Day8.solve
+  | day == 9 = putStrLn "** Day 9 **" >> Day9.solve
   | otherwise = error $ "No solution for day " <> show day
 
 main :: IO ()
